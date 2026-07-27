@@ -5,7 +5,7 @@ Smart Business Management System
 </h3>
 
 <p align="center">
-A modern Flask-based Business Management System developed during an Industrial Internship at <b>Pratyush Advertising</b>.
+A modern Flask-based Business Management System developed during an Industrial Internship at <b>Pratyush Advertising Pvt. Ltd.</b>.
 </p>
 
 <p align="center">
