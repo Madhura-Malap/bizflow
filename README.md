@@ -9,12 +9,12 @@ A modern Flask-based Business Management System developed during an Industrial I
 </p>
 
 <p align="center">
-![Python](https://img.shields.io/badge/Python-3.13-blue?logo=python)
-![Flask](https://img.shields.io/badge/Flask-3.1-black?logo=flask)
-![SQLAlchemy](https://img.shields.io/badge/SQLAlchemy-ORM-red)
-![SQLite](https://img.shields.io/badge/Database-SQLite-blue)
-![Bootstrap](https://img.shields.io/badge/Bootstrap-5-purple?logo=bootstrap)
-![Chart.js](https://img.shields.io/badge/Charts-Chart.js-ff6384)
+  <img src="https://img.shields.io/badge/Python-3.13-blue?logo=python" />
+  <img src="https://img.shields.io/badge/Flask-3.1-black?logo=flask" />
+  <img src="https://img.shields.io/badge/SQLAlchemy-ORM-red" />
+  <img src="https://img.shields.io/badge/Database-SQLite-blue" />
+  <img src="https://img.shields.io/badge/Bootstrap-5-purple?logo=bootstrap" />
+  <img src="https://img.shields.io/badge/Charts-Chart.js-ff6384" />
 </p>
 
 ---
