@@ -77,8 +77,6 @@ This project was developed as part of an Industrial Internship at **Pratyush Adv
 
 ## 📂 Project Structure
 
-## 📂 Project Structure
-
 ```text
 bizflow/
 │
