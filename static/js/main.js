@@ -1,0 +1,1 @@
+console.log("PAMS Loaded Successfully 🚀");

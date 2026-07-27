@@ -1,0 +1,208 @@
+{% extends "dashboard_base.html" %}
+
+{% block title %}Clients{% endblock %}
+
+{% block css %}
+{{ super() }} 
+<link rel="stylesheet" href="{{ url_for('static', filename='css/clients.css') }}">
+{% endblock %}
+
+{% block dashboard_content %}
+
+<div class="container mt-5">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <h2>Client Management</h2>
+
+    </div>
+
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+
+    <div class="alert alert-success">
+
+        {{ messages[0] }}
+
+    </div>
+
+    {% endif %}
+    {% endwith %}
+
+    <div class="card shadow p-4">
+
+        <form action="/clients/add" method="POST">
+
+            <div class="row">
+
+                <div class="col-md-6">
+
+                    <input
+                    class="form-control mb-3"
+                    name="company_name"
+                    placeholder="Company Name"
+                    required>
+
+                </div>
+
+                <div class="col-md-6">
+
+                    <input
+                    class="form-control mb-3"
+                    name="contact_person"
+                    placeholder="Contact Person"
+                    required>
+
+                </div>
+
+                <div class="col-md-6">
+
+                    <input
+                    class="form-control mb-3"
+                    name="phone"
+                    placeholder="Phone Number"
+                    required>
+
+                </div>
+
+                <div class="col-md-6">
+
+                    <input
+                    class="form-control mb-3"
+                    name="email"
+                    placeholder="Email">
+
+                </div>
+
+                <div class="col-md-12">
+
+                    <input
+                    class="form-control mb-3"
+                    name="address"
+                    placeholder="Address">
+
+                </div>
+
+                <div class="col-md-6">
+
+                    <input
+                    class="form-control mb-3"
+                    name="gst_number"
+                    placeholder="GST Number">
+
+                </div>
+
+                <div class="col-md-6">
+
+                    <input
+                    class="form-control mb-3"
+                    name="notes"
+                    placeholder="Notes">
+
+                </div>
+
+            </div>
+
+            <button class="btn btn-warning">
+
+                Add Client
+
+            </button>
+
+        </form>
+
+    </div>
+
+    <br>
+
+    <div class="card shadow p-4">
+
+    <div class="d-flex justify-content-between mb-3">
+
+        <input
+            type="text"
+            id="searchInput"
+            class="form-control"
+            placeholder="Search clients..."
+            style="max-width:350px;">
+
+    </div>
+
+    <div class="table-responsive"></div>
+
+    <table class="table table-hover">
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% for client in clients %}
+
+                <tr>
+
+                    <td>{{ client.id }}</td>
+
+                    <td>{{ client.company_name }}</td>
+
+                    <td>{{ client.contact_person }}</td>
+
+                    <td>{{ client.phone }}</td>
+
+                    <td>{{ client.email }}</td>
+
+                    <td>
+
+                        <a href="{{ url_for('edit_client', id=client.id) }}" class="action-icon edit-icon" title="Edit">
+                            <i class="bi bi-pencil-square"></i>
+                        </a>
+
+                        <a href="{{ url_for('delete_client', id=client.id) }}"
+                            class="action-icon delete-icon"
+                            title="Delete"
+                            onclick="return confirm('Delete this client?')">
+                            <i class="bi bi-trash"></i>
+                        </a>
+                        
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+         
+        </table>
+
+    </div>
+
+</div>
+
+<script>
+
+const searchInput = document.getElementById("searchInput");
+
+searchInput.addEventListener("keyup", function(){
+
+    let filter = this.value.toLowerCase();
+
+    let rows = document.querySelectorAll("tbody tr");
+
+    rows.forEach(function(row){
+
+        let text = row.innerText.toLowerCase();
+
+        if(text.includes(filter)){
+            row.style.display = "";
+        }else{
+            row.style.display = "none";
+        }
+
+    });
+
+});
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,70 @@
+body{
+    background:#F5F7FA;
+}
+
+.card{
+    border:none;
+    border-radius:18px;
+}
+
+.table{
+    width:100%;
+    table-layout:auto;
+}
+
+.table th,
+.table td{
+    vertical-align:middle;
+}
+
+.btn-warning{
+    background:#F4B400;
+    border:none;
+    font-weight:600;
+}
+
+.btn-warning:hover{
+    background:#e3a800;
+}
+
+/* Action Icons */
+
+.action-icon{
+    width:26px;
+    height:26px;
+    border-radius:6px;
+    display:inline-flex;
+    justify-content:center;
+    align-items:center;
+    text-decoration:none;
+    margin:0 1px;
+    transition:.25s;
+    cursor:pointer;
+}
+
+.action-icon i{
+    font-size:13px;
+}
+
+.edit-icon{
+    background:#E8F1FF;
+    color:#2563EB;
+}
+
+.edit-icon:hover{
+    background:#2563EB;
+    color:#fff;
+}
+
+.delete-icon{
+    background:#FEE2E2;
+    color:#DC2626;
+}
+
+.delete-icon:hover{
+    background:#DC2626;
+    color:#fff;
+}
+
+
+

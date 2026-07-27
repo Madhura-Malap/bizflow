@@ -1,0 +1,133 @@
+{% extends "dashboard_base.html" %}
+
+{% block title %}Edit Project{% endblock %}
+
+{% block css %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/clients.css') }}">
+{% endblock %}
+
+{% block dashboard_content %}
+
+<div class="container mt-4">
+
+    <div class="card shadow p-4">
+
+        <h3 class="mb-4">Edit Project</h3>
+
+        <form method="POST">
+
+            <div class="row">
+
+                <div class="col-md-6 mb-3">
+                    <label>Project Name</label>
+                    <input type="text"
+                           class="form-control"
+                           name="project_name"
+                           value="{{ project.project_name }}"
+                           required>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label>Project Type</label>
+                    <input type="text"
+                           class="form-control"
+                           name="project_type"
+                           value="{{ project.project_type }}"
+                           required>
+                </div>
+
+                <div class="col-md-6 mb-3">
+
+                    <label>Client</label>
+
+                    <select class="form-control" name="client_id">
+
+                        {% for client in clients %}
+
+                        <option value="{{ client.id }}"
+                        {% if client.id==project.client_id %}
+                        selected
+                        {% endif %}
+                        >
+
+                        {{ client.company_name }}
+
+                        </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label>Budget</label>
+                    <input type="number"
+                           class="form-control"
+                           name="budget"
+                           value="{{ project.budget }}">
+                </div>
+
+                <div class="col-md-6 mb-3">
+
+                    <label>Status</label>
+
+                    <select class="form-control" name="status">
+
+                        <option {% if project.status=="Pending" %}selected{% endif %}>
+                            Pending
+                        </option>
+
+                        <option {% if project.status=="In Progress" %}selected{% endif %}>
+                            In Progress
+                        </option>
+
+                        <option {% if project.status=="Completed" %}selected{% endif %}>
+                            Completed
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <div class="col-md-3 mb-3">
+                    <label>Start Date</label>
+                    <input type="date"
+                           class="form-control"
+                           name="start_date"
+                           value="{{ project.start_date }}">
+                </div>
+
+                <div class="col-md-3 mb-3">
+                    <label>End Date</label>
+                    <input type="date"
+                           class="form-control"
+                           name="end_date"
+                           value="{{ project.end_date }}">
+                </div>
+
+                <div class="col-md-12 mb-3">
+                    <label>Description</label>
+                    <textarea class="form-control"
+                              name="description"
+                              rows="3">{{ project.description }}</textarea>
+                </div>
+
+            </div>
+
+            <button class="btn btn-warning">
+    Update Employee
+</button>
+
+<a href="/employees" class="btn btn-secondary">
+    Cancel
+</a>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

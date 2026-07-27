@@ -1,0 +1,125 @@
+{% extends "dashboard_base.html" %}
+
+{% block title %}Settings{% endblock %}
+
+{% block css %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/settings.css') }}">
+{% endblock %}
+
+{% block dashboard_content %}
+
+
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert-message">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+<div class="profile-card settings-card">
+
+    <h3><i class="bi bi-person-circle"></i> Profile Information</h3>
+
+    <div class="profile-box">
+
+        <div class="profile-avatar">
+            <i class="bi bi-person-fill"></i>
+        </div>
+
+        <div class="profile-details">
+            <p><strong>Username:</strong> {{ username }}</p>
+            <p><strong>Role:</strong> Administrator</p>
+            <p><strong>Status:</strong> Active</p>
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="password-card settings-card">
+
+    <h3><i class="bi bi-shield-lock-fill"></i> Change Password</h3>
+
+    <form action="{{ url_for('settings') }}" method="POST">
+        
+        <div class="form-group">
+            <label>Current Password</label>
+            <input type="password" name="current_password" class="form-control" required>
+        </div>
+
+        <div class="form-group">
+            <label>New Password</label>
+            <input type="password" name="new_password" class="form-control" required>
+        </div>
+
+        <div class="form-group">
+            <label>Confirm Password</label>
+            <input type="password" name="confirm_password" class="form-control" required>
+        </div>
+
+        <button type="submit" class="save-btn">
+            <i class="bi bi-check-circle-fill"></i>
+            Update Password
+        </button>
+
+    </form>
+
+</div>
+
+
+<div class="bottom-grid">
+
+    <div class="settings-card">
+
+        <h3><i class="bi bi-cpu-fill"></i> System Information</h3>
+
+        <table class="info-table">
+
+            <tr>
+                <td>Application</td>
+                <td>Pratyush Advertising Management System</td>
+            </tr>
+
+            <tr>
+                <td>Version</td>
+                <td>1.0</td>
+            </tr>
+
+            <tr>
+                <td>Technology</td>
+                <td>Python, Flask, SQLite, SQLAlchemy, HTML5, CSS3, JavaScript, Bootstrap Icons, Chart.js</td>
+            </tr>
+
+            <tr>
+                <td>Developer</td>
+                <td>Madhura Malap</td>
+            </tr>
+
+        </table>
+
+    </div>
+
+    <div class="settings-card">
+
+        <h3><i class="bi bi-headset"></i> Contact & Support</h3>
+
+        <div class="support-box">
+
+            <p><i class="bi bi-envelope-fill"></i> support@pratyushadvertising.com</p>
+
+            <p><i class="bi bi-telephone-fill"></i> +91 98765 43210</p>
+
+            <p><i class="bi bi-clock-fill"></i> Mon – Sat | 9:00 AM – 6:00 PM</p>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

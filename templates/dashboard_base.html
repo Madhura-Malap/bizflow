@@ -1,0 +1,176 @@
+{% extends "base.html" %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<div class="sidebar">
+
+    <div class="logo-box">
+
+        <img src="{{ url_for('static', filename='images/logo.png') }}">
+
+        <h3>Pratyush</h3>
+
+        <p>Advertising</p>
+
+    </div>
+
+<ul>
+
+    <li class="{% if request.path == '/dashboard' %}active{% endif %}"
+        onclick="window.location.href='/dashboard'">
+        <i class="bi bi-speedometer2"></i>
+        Dashboard
+    </li>
+
+    <li class="{% if request.path == '/clients' %}active{% endif %}"
+        onclick="window.location.href='/clients'">
+        <i class="bi bi-people-fill"></i>
+        Clients
+    </li>
+
+    <li class="{% if request.path == '/projects' %}active{% endif %}"
+        onclick="window.location.href='/projects'">
+        <i class="bi bi-kanban-fill"></i>
+        Projects
+    </li>
+
+    <li class="{% if request.path == '/employees' %}active{% endif %}"
+        onclick="window.location.href='/employees'">
+        <i class="bi bi-person-badge-fill"></i>
+        Employees
+    </li>
+
+    <li class="{% if request.path == '/complaints' %}active{% endif %}"
+        onclick="window.location.href='/complaints'">
+        <i class="bi bi-exclamation-circle-fill"></i>
+        Complaints
+    </li>
+
+    <li class="{% if request.path == '/invoices' %}active{% endif %}"
+        onclick="window.location.href='/invoices'">
+        <i class="bi bi-receipt"></i>
+        Invoices
+    </li>
+
+
+    <li class="{% if request.path == '/settings' %}active{% endif %}"
+        onclick="window.location.href='/settings'">
+        <i class="bi bi-gear-fill"></i>
+        Settings
+    </li>
+
+    <li onclick="window.location.href='/logout'">
+        <i class="bi bi-box-arrow-right"></i>
+        Logout
+    </li>
+
+</ul>
+</div>
+
+<div class="main">
+
+    <div class="topbar">
+
+        <div>
+
+            <h2>Welcome, {{ username }} 👋</h2>
+
+            <p>Pratyush Advertising Management System</p>
+
+        </div>
+
+        <div class="admin-box">
+
+            <i class="bi bi-bell-fill notification-bell"
+                data-bs-toggle="toast"
+                data-bs-target="#notificationToast"
+                style="cursor:pointer;"></i>
+
+            <div class="admin-name">
+
+                {{ username }}
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="toast-container position-fixed top-0 end-0 p-3">
+
+    <div id="notificationToast"
+         class="toast"
+         role="alert"
+         aria-live="assertive"
+         aria-atomic="true">
+
+        <div class="toast-header">
+
+            <i class="bi bi-bell-fill text-warning me-2"></i>
+
+            <strong class="me-auto">
+                Notifications
+            </strong>
+
+            <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="toast">
+            </button>
+
+        </div>
+
+        <div class="toast-body">
+
+            No new notifications
+
+        </div>
+
+    </div>
+
+</div>
+
+    {% block dashboard_content %}
+
+    {% endblock %}
+
+<script>
+window.addEventListener("load", function () {
+    const sidebar = document.querySelector(".sidebar");
+    if (sidebar) {
+        sidebar.scrollTop = 0;
+    }
+});
+</script>
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const bell = document.querySelector(".notification-bell");
+
+    const toastElement = document.getElementById("notificationToast");
+
+    const toast = new bootstrap.Toast(toastElement, {
+        delay: 3000
+    });
+
+    bell.addEventListener("click", function () {
+        toast.show();
+    });
+
+});
+
+</script>
+
+<footer class="footer">
+    © 2026 Pratyush Advertising Management System | All Rights Reserved.
+</footer>
+
+</div>
+
+{% endblock %}

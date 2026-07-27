@@ -1,0 +1,231 @@
+{% extends "dashboard_base.html" %}
+
+{% block title %}Employees{% endblock %}
+
+{% block css %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/employees.css') }}">
+{% endblock %}
+
+{% block dashboard_content %}
+
+<div class="container mt-4">
+
+    <h2 class="mb-4">Employee Management</h2>
+
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <div class="alert alert-success">
+        {{ messages[0] }}
+    </div>
+    {% endif %}
+    {% endwith %}
+
+    <div class="card shadow p-4 mb-4">
+
+        <form action="/employees/add" method="POST">
+
+            <div class="row">
+
+                <div class="col-md-6 mb-3">
+                    <input class="form-control"
+                           name="employee_name"
+                           placeholder="Employee Name"
+                           required>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <input type="email"
+                           class="form-control"
+                           name="email"
+                           placeholder="Email"
+                           required>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <input class="form-control"
+                           name="phone"
+                           placeholder="Phone Number"
+                           required>
+                </div>
+
+                <div class="col-md-6 mb-3">
+
+                    <select class="form-control"
+                            name="department"
+                            required>
+
+                        <option value="">Select Department</option>
+
+                        <option>Design</option>
+                        <option>Marketing</option>
+                        <option>Sales</option>
+                        <option>Finance</option>
+                        <option>Production</option>
+                        <option>Operations</option>
+                        <option>HR</option>
+                        <option>Installation</option>
+                        <option>Digital Marketing</option>
+
+                    </select>
+
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <input class="form-control"
+                           name="designation"
+                           placeholder="Designation"
+                           required>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <input type="number"
+                           class="form-control"
+                           name="salary"
+                           placeholder="Salary"
+                           required>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <input type="date"
+                           class="form-control"
+                           name="joining_date"
+                           required>
+                </div>
+
+                <div class="col-md-6 mb-3">
+
+                    <select class="form-control"
+                            name="status">
+
+                        <option>Active</option>
+                        <option>On Leave</option>
+                        <option>Resigned</option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+            <button class="btn btn-warning">
+                Add Employee
+            </button>
+
+        </form>
+
+    </div>
+
+    <div class="mb-3">
+
+        <input
+        id="employeeSearch"
+        class="form-control"
+        placeholder="Search Employee">
+
+    </div>
+
+    <div class="card shadow p-4">
+
+        <div class="table-responsive">
+
+    <table class="table table-hover">
+
+            <thead>
+
+                <tr>
+
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Department</th>
+                    <th>Designation</th>
+                    <th>Salary</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+            {% for employee in employees %}
+
+            <tr>
+
+                <td>{{ employee.id }}</td>
+
+                <td>{{ employee.employee_name }}</td>
+
+                <td>{{ employee.department }}</td>
+
+                <td>{{ employee.designation }}</td>
+
+                <td>₹{{ employee.salary }}</td>
+
+                <td>
+
+                    {% if employee.status=="Active" %}
+                    <span class="badge bg-success">Active</span>
+
+                    {% elif employee.status=="On Leave" %}
+                    <span class="badge bg-warning text-dark">On Leave</span>
+
+                    {% else %}
+                    <span class="badge bg-danger">Resigned</span>
+
+                    {% endif %}
+
+                </td>
+
+                <td class="text-center">
+
+    <a href="/employees/edit/{{ employee.id }}"
+       class="action-icon edit-icon"
+       title="Edit">
+        <i class="bi bi-pencil-square"></i>
+    </a>
+
+    <a href="/employees/delete/{{ employee.id }}"
+       class="action-icon delete-icon"
+       title="Delete"
+       onclick="return confirm('Delete Employee?')">
+        <i class="bi bi-trash"></i>
+    </a>
+
+</td>
+
+            </tr>
+
+            {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+<script>
+
+const search=document.getElementById("employeeSearch");
+
+search.addEventListener("keyup",function(){
+
+let filter=this.value.toLowerCase();
+
+let rows=document.querySelectorAll("tbody tr");
+
+rows.forEach(function(row){
+
+row.style.display=row.innerText.toLowerCase().includes(filter)
+?"":"none";
+
+});
+
+});
+
+</script>
+
+{% endblock %}

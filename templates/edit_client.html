@@ -1,0 +1,80 @@
+{% extends "dashboard_base.html" %}
+
+{% block title %}Edit Client{% endblock %}
+
+{% block css %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/clients.css') }}">
+{% endblock %}
+
+{% block dashboard_content %}
+
+<div class="container mt-4">
+
+    <div class="card shadow p-4">
+
+        <h3 class="mb-4">Edit Client</h3>
+
+        <form method="POST">
+
+            <div class="row">
+
+                <div class="col-md-6 mb-3">
+                    <label>Company Name</label>
+                    <input type="text" class="form-control" name="company_name"
+                           value="{{ client.company_name }}" required>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label>Contact Person</label>
+                    <input type="text" class="form-control" name="contact_person"
+                           value="{{ client.contact_person }}" required>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label>Phone Number</label>
+                    <input type="text" class="form-control" name="phone"
+                           value="{{ client.phone }}" required>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label>Email</label>
+                    <input type="email" class="form-control" name="email"
+                           value="{{ client.email }}">
+                </div>
+
+                <div class="col-md-12 mb-3">
+                    <label>Address</label>
+                    <input type="text" class="form-control" name="address"
+                           value="{{ client.address }}">
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label>GST Number</label>
+                    <input type="text" class="form-control" name="gst_number"
+                           value="{{ client.gst_number }}">
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label>Notes</label>
+                    <input type="text" class="form-control" name="notes"
+                           value="{{ client.notes }}">
+                </div>
+
+            </div>
+
+            <button type="submit" class="btn btn-warning">
+                Update Client
+            </button>
+
+            <a href="/clients" class="btn btn-secondary">
+                Cancel
+            </a>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

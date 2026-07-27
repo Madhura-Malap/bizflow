@@ -1,0 +1,121 @@
+body{
+
+    background:#F5F7FA;
+
+}
+
+.card{
+
+    border:none;
+
+    border-radius:18px;
+
+}
+
+.table{
+
+    width:100%;
+
+    table-layout:fixed;
+
+}
+
+.table th,
+.table td{
+
+    vertical-align:middle;
+
+    overflow-wrap:anywhere;
+
+}
+
+.table th:nth-child(5),
+.table td:nth-child(5){
+
+    width:220px;
+
+}
+
+.btn-warning{
+
+    background:#F4B400;
+
+    border:none;
+
+    font-weight:600;
+
+}
+
+.btn-warning:hover{
+
+    background:#e3a800;
+
+}
+
+.action-icon{
+    width:26px;
+    height:26px;
+    border-radius:6px;
+    display:inline-flex;
+    justify-content:center;
+    align-items:center;
+    text-decoration:none;
+    margin:0 2px;
+    transition:.25s;
+    cursor:pointer;
+}
+
+.action-icon i{
+    font-size:13px;
+}
+
+.edit-icon{
+    background:#E8F1FF;
+    color:#2563EB;
+}
+
+.edit-icon:hover{
+    background:#2563EB;
+    color:white;
+}
+
+.delete-icon{
+    background:#FEE2E2;
+    color:#DC2626;
+}
+
+.delete-icon:hover{
+    background:#DC2626;
+    color:white;
+}
+
+.table th:nth-child(1),
+.table td:nth-child(1){
+    width:60px;
+}
+
+.table th:nth-child(2),
+.table td:nth-child(2){
+    width:220px;
+}
+
+.table th:nth-child(3),
+.table td:nth-child(3){
+    width:180px;
+}
+
+.table th:nth-child(4),
+.table td:nth-child(4){
+    width:150px;
+}
+
+.table th:nth-child(5),
+.table td:nth-child(5){
+    width:250px;
+}
+
+.table th:nth-child(6),
+.table td:nth-child(6){
+    width:80px;
+    text-align:center;
+}

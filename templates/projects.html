@@ -1,0 +1,198 @@
+{% extends "dashboard_base.html" %}
+
+{% block title %}Projects{% endblock %}
+
+{% block css %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/projects.css') }}">
+{% endblock %}
+
+{% block dashboard_content %}
+
+<div class="container mt-4">
+
+    <h2 class="mb-4">Project Management</h2>
+
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <div class="alert alert-success">
+        {{ messages[0] }}
+    </div>
+    {% endif %}
+    {% endwith %}
+
+    <div class="card shadow p-4 mb-4">
+
+        <form action="/projects/add" method="POST">
+
+            <div class="row">
+
+                <div class="col-md-6 mb-3">
+                    <input class="form-control" name="project_name" placeholder="Project Name" required>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <input class="form-control" name="project_type" placeholder="Project Type" required>
+                </div>
+
+                <div class="col-md-6 mb-3">
+
+                    <select class="form-control" name="client_id" required>
+
+                        <option value="">Select Client</option>
+
+                        {% for client in clients %}
+                        <option value="{{ client.id }}">
+                            {{ client.company_name }}
+                        </option>
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <input type="number" class="form-control" name="budget" placeholder="Budget">
+                </div>
+
+                <div class="col-md-6 mb-3">
+
+                    <select class="form-control" name="status">
+
+                        <option>Pending</option>
+                        <option>In Progress</option>
+                        <option>Completed</option>
+
+                    </select>
+
+                </div>
+
+                <div class="col-md-3 mb-3">
+                    <input type="date" class="form-control" name="start_date">
+                </div>
+
+                <div class="col-md-3 mb-3">
+                    <input type="date" class="form-control" name="end_date">
+                </div>
+
+                <div class="col-md-12 mb-3">
+                    <textarea class="form-control"
+                              name="description"
+                              rows="3"
+                              placeholder="Project Description"></textarea>
+                </div>
+
+            </div>
+
+            <button class="btn btn-warning">
+                Add Project
+            </button>
+
+        </form>
+
+    </div>
+
+    <div class="card shadow p-4">
+
+        <div class="mb-3">
+
+        <input
+        type="text"
+        id="projectSearch"
+        class="form-control"
+        placeholder="Search Project...">
+
+        </div>
+
+        <table class="table table-hover">
+
+            <thead>
+
+                <tr>
+
+                    <th>ID</th>
+                    <th>Project</th>
+                    <th>Client</th>
+                    <th>Type</th>
+                    <th>Budget</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% for project in projects %}
+
+                <tr>
+
+                    <td>{{ project.id }}</td>
+                    <td>{{ project.project_name }}</td>
+                    <td>{{ project.client.company_name }}</td>
+                    <td>{{ project.project_type }}</td>
+                    <td>₹{{ project.budget }}</td>
+
+                    <td>
+                    {% if project.status=="Completed" %}
+                    <span class="badge bg-success">Completed</span>
+
+                    {% elif project.status=="In Progress" %}
+                    <span class="badge bg-primary">In Progress</span>
+
+                    {% else %}
+                    <span class="badge bg-warning text-dark">Pending</span>
+                    {% endif %}
+                    </td>
+
+                    <td class="text-center">
+
+    <a href="/projects/edit/{{ project.id }}"
+       class="action-icon edit-icon"
+       title="Edit">
+        <i class="bi bi-pencil-square"></i>
+    </a>
+
+    <a href="/projects/delete/{{ project.id }}"
+       class="action-icon delete-icon"
+       title="Delete"
+       onclick="return confirm('Delete this project?')">
+        <i class="bi bi-trash"></i>
+    </a>
+
+</td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+<script>
+
+const projectSearch=document.getElementById("projectSearch");
+
+projectSearch.addEventListener("keyup",function(){
+
+let filter=this.value.toLowerCase();
+
+let rows=document.querySelectorAll("tbody tr");
+
+rows.forEach(function(row){
+
+row.style.display=row.innerText.toLowerCase().includes(filter)?"":"none";
+
+});
+
+});
+
+</script>
+
+{% endblock %}

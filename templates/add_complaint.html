@@ -1,0 +1,132 @@
+{% extends "dashboard_base.html" %}
+
+{% block title %}Add Complaint{% endblock %}
+
+{% block dashboard_content %}
+
+<div class="container mt-4">
+
+    <div class="card shadow p-4">
+
+        <h2 class="mb-4">Add Complaint</h2>
+
+        <form method="POST">
+
+            <div class="row">
+
+                <div class="col-md-4 mb-3">
+
+                    <label>Client</label>
+
+                    <select class="form-control" name="client_id" required>
+
+                        {% for client in clients %}
+                        <option value="{{ client.id }}">
+                            {{ client.company_name }}
+                        </option>
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+                <div class="col-md-4 mb-3">
+
+                    <label>Project</label>
+
+                    <select class="form-control" name="project_id" required>
+
+                        {% for project in projects %}
+                        <option value="{{ project.id }}">
+                            {{ project.project_name }}
+                        </option>
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+                <div class="col-md-4 mb-3">
+
+                    <label>Assigned Employee</label>
+
+                    <select class="form-control" name="employee_id" required>
+
+                        {% for employee in employees %}
+                        <option value="{{ employee.id }}">
+                            {{ employee.employee_name }}
+                        </option>
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+                <div class="col-md-6 mb-3">
+
+                    <label>Complaint Title</label>
+
+                    <input
+                        type="text"
+                        class="form-control"
+                        name="title"
+                        required>
+
+                </div>
+
+                <div class="col-md-6 mb-3">
+
+                    <label>Priority</label>
+
+                    <select class="form-control" name="priority">
+
+                        <option value="Low">Low</option>
+                        <option value="Medium" selected>Medium</option>
+                        <option value="High">High</option>
+
+                    </select>
+
+                </div>
+
+                <div class="col-md-12 mb-3">
+
+                    <label>Description</label>
+
+                    <textarea
+                        class="form-control"
+                        rows="4"
+                        name="description"
+                        required></textarea>
+
+                </div>
+
+                <div class="col-md-6 mb-3">
+
+                    <label>Status</label>
+
+                    <select class="form-control" name="status">
+
+                        <option value="In Progress" selected>In Progress</option>
+                        <option value="Resolved">Resolved</option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+            <button type="submit" class="btn btn-success px-4 fw-semibold">
+                Add Complaint
+            </button>
+
+            <a href="/complaints" class="btn btn-secondary">
+                Cancel
+            </a>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

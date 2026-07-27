@@ -1,0 +1,230 @@
+{% extends "dashboard_base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block dashboard_content %}
+
+<div class="cards">
+
+    <div class="card-box card-yellow">
+        <div class="card-header">
+            <h6>Total Clients</h6>  
+            <i class="fas fa-users"></i>
+        </div>
+        <h2>{{ total_clients }}</h2>
+    </div>
+
+    <div class="card-box card-green">
+        <div class="card-header">
+            <h6>Active Projects</h6>
+            <i class="fas fa-folder-open"></i>
+        </div>
+        <h2>{{ total_projects }}</h2>
+    </div>
+
+    <div class="card-box card-blue">
+        <div class="card-header">
+            <h6>Revenue</h6>
+            <i class="fas fa-indian-rupee-sign"></i>
+        </div>
+        <h2>₹{{ "{:,.0f}".format(total_revenue) }}</h2>
+    </div>
+
+    <div class="card-box card-red">
+        <div class="card-header">
+            <h6>Total Complaints</h6>
+            <i class="fas fa-triangle-exclamation"></i>
+        </div>
+        <h2>{{ complaint_count }}</h2>
+    </div>
+
+</div>
+
+<div class="row2">
+
+    <div class="chart-box">
+
+        <h4>Revenue Overview</h4>
+
+        <br>
+
+        <canvas id="revenueChart"></canvas>
+
+    </div>
+
+    <div class="activity-box">
+
+        <h4>Recent Activities</h4>
+
+        <br>
+
+        {% for activity in recent_activities %}
+
+<div class="activity">
+
+    <div class="activity-left">
+
+        <div class="activity-dot"></div>
+
+        <span>{{ activity.message }}</span>
+
+    </div>
+
+    <span class="activity-time">{{ activity.time }}</span>
+
+</div>
+
+{% else %}
+
+<div class="activity">
+
+    <span>No recent activity available.</span>
+
+    <span>-</span>
+
+</div>
+
+{% endfor %}
+
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+const monthLabels = {{ month_labels | tojson | safe }};
+const monthlyRevenue = {{ monthly_revenue | tojson | safe }};
+
+const ctx = document.getElementById('revenueChart');
+
+new Chart(ctx, {
+
+    type: 'line',
+
+    data: {
+
+        labels: monthLabels,
+
+        datasets: [{
+
+    label: 'Revenue',
+
+    data: monthlyRevenue,
+
+    borderColor: '#F4B400',
+
+    backgroundColor: 'rgba(244,180,0,0.15)',
+
+    fill: true,
+
+    tension: 0.45,
+
+    borderWidth: 3,
+
+    pointRadius: 5,
+
+    pointHoverRadius: 8,
+
+    pointBackgroundColor: '#F4B400',
+
+    pointBorderColor: '#ffffff',
+
+    pointBorderWidth: 2
+
+}]
+
+    },
+
+    options: {
+
+    responsive: true,
+
+    maintainAspectRatio: true,
+
+    interaction: {
+        mode: 'index',
+        intersect: false
+    },
+
+    plugins: {
+
+        legend: {
+            display: false
+        },
+
+        tooltip: {
+
+            backgroundColor: "#1f2937",
+
+            titleColor: "#ffffff",
+
+            bodyColor: "#ffffff",
+
+            padding: 12,
+
+            displayColors: false,
+
+            callbacks: {
+
+                label: function(context) {
+
+                    return "Revenue : ₹" + context.raw.toLocaleString();
+
+                }
+
+            }
+
+        }
+
+    },
+
+    scales: {
+
+        x: {
+
+            grid: {
+                display: false
+            },
+
+            ticks: {
+                color: "#666"
+            }
+
+        },
+
+        y: {
+
+            beginAtZero: true,
+
+            grid: {
+                color: "rgba(0,0,0,0.06)"
+            },
+
+            ticks: {
+
+                color: "#666",
+
+                callback: function(value) {
+
+                    if (value >= 100000) {
+                        return "₹" + (value / 100000).toFixed(1) + "L";
+                    }
+
+                    return "₹" + value;
+
+                }
+
+            }
+
+        }
+
+    }
+}
+
+});
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,281 @@
+{% extends "dashboard_base.html" %}
+
+{% block title %}Invoices{% endblock %}
+
+{% block css %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/invoices.css') }}">
+{% endblock %}
+
+{% block dashboard_content %}
+
+<div class="container mt-4">
+
+    <h2 class="fw-bold mb-0">Invoice & Billing Management</h2>
+
+    <div class="card shadow p-4 mb-4">
+
+        <form action="/invoices/add" method="POST">
+
+            <div class="row">
+
+                <div class="col-md-4 mb-3">
+                    <label>Client</label>
+
+                    <select class="form-control"
+                            name="client_id"
+                            required>
+
+                        <option value="">Select Client</option>
+
+                        {% for client in clients %}
+                        <option value="{{ client.id }}">
+                            {{ client.company_name }}
+                        </option>
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <label>Project</label>
+
+                    <select class="form-control"
+                            name="project_id"
+                            required>
+
+                        <option value="">Select Project</option>
+
+                        {% for project in projects %}
+                        <option value="{{ project.id }}">
+                            {{ project.project_name }}
+                        </option>
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <label>Subtotal (₹)</label>
+                    <input type="number"
+                           class="form-control"
+                           id="subtotal"
+                           name="subtotal"
+                           required>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <label>GST (%)</label>
+
+                    <select class="form-control"
+                            id="gst"
+                            name="gst">
+
+                        <option value="5">5%</option>
+                        <option value="12">12%</option>
+                        <option value="18" selected>18%</option>
+                        <option value="28">28%</option>
+
+                    </select>
+
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <label>Total (₹)</label>
+                    <input type="number"
+                           class="form-control"
+                           id="total"
+                           name="total",
+                           readonly>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <label>Invoice Date</label>
+                    <input type="date"
+                           class="form-control"
+                           name="invoice_date"
+                           required>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <label>Due Date</label>
+                    <input type="date"
+                           class="form-control"
+                           name="due_date"
+                           required>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <label>Payment Status</label>
+
+                    <select class="form-control"
+                            name="payment_status">
+
+                        <option>Pending</option>
+                        <option>Paid</option>
+                        <option>Overdue</option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+            <button class="btn btn-warning">
+                Create Invoice
+            </button>
+
+        </form>
+
+        <hr class="my-4">
+
+<div class="card shadow p-4">
+
+    <div class="mb-4">
+
+    <input
+        type="text"
+        id="invoiceSearch"
+        class="form-control"
+        placeholder="Search Invoice...">
+
+</div>
+    <h4 class="mb-3">All Invoices</h4>
+
+    <table class="table table-hover">
+
+        <thead>
+            <tr>
+                <th style="width:120px;">Invoice No.</th>
+                <th>Client</th>
+                <th>Project</th>
+                <th style="width:120px;">Total</th>
+                <th style="width:90px;">Status</th>
+                <th style="width:120px;">Invoice Date</th>
+                <th style="width:110px;">Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+        {% if invoices %}
+
+            {% for invoice in invoices %}
+
+            <tr>
+
+                <td>{{ invoice.invoice_number }}</td>
+
+                <td>{{ invoice.client.company_name }}</td>
+
+                <td>{{ invoice.project.project_name }}</td>
+
+                <td>₹{{ invoice.total }}</td>
+
+                <td>
+
+                    {% if invoice.payment_status=="Paid" %}
+                        <span class="badge bg-success">Paid</span>
+
+                    {% elif invoice.payment_status=="Pending" %}
+                        <span class="badge bg-warning text-dark">Pending</span>
+
+                    {% else %}
+                        <span class="badge bg-danger">Overdue</span>
+
+                    {% endif %}
+
+                </td>
+
+                <td>{{ invoice.invoice_date.strftime("%d-%m-%Y") }}</td>
+
+                <td>
+
+    <a href="/invoices/edit/{{ invoice.id }}"
+       class="action-icon edit-icon"
+       title="Edit">
+        <i class="bi bi-pencil-square"></i>
+    </a>
+
+    <a href="/invoices/delete/{{ invoice.id }}"
+       class="action-icon delete-icon"
+       title="Delete"
+       onclick="return confirm('Delete this invoice?')">
+        <i class="bi bi-trash"></i>
+    </a>
+
+    <a href="/invoice/pdf/{{ invoice.id }}"
+       class="action-icon pdf-icon"
+       title="Download PDF">
+        <i class="bi bi-file-earmark-pdf-fill"></i>
+    </a>
+
+</td>
+
+            </tr>
+
+            {% endfor %}
+
+        {% else %}
+
+            <tr>
+                <td colspan="7" class="text-center text-muted">
+                    No invoices found.
+                </td>
+            </tr>
+
+        {% endif %}
+
+        </tbody>
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+<script>
+
+const subtotal = document.getElementById("subtotal");
+const gst = document.getElementById("gst");
+const total = document.getElementById("total");
+
+function calculateTotal(){
+
+    let sub = parseFloat(subtotal.value) || 0;
+    let gstRate = parseFloat(gst.value) || 0;
+
+    total.value = (sub + (sub * gstRate / 100)).toFixed(2);
+
+}
+
+subtotal.addEventListener("input", calculateTotal);
+gst.addEventListener("change", calculateTotal);
+
+
+// Search Function
+
+const search = document.getElementById("invoiceSearch");
+
+search.addEventListener("keyup", function(){
+
+    let filter = this.value.toLowerCase();
+
+    let rows = document.querySelectorAll("tbody tr");
+
+    rows.forEach(function(row){
+
+        row.style.display = row.innerText.toLowerCase().includes(filter)
+            ? ""
+            : "none";
+
+    });
+
+});
+
+</script>
+
+{% endblock %}

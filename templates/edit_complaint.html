@@ -1,0 +1,144 @@
+{% extends "dashboard_base.html" %}
+
+{% block title %}Edit Complaint{% endblock %}
+
+{% block dashboard_content %}
+
+<div class="container mt-4">
+
+    <div class="card shadow p-4">
+
+        <h2 class="mb-4">Edit Complaint</h2>
+
+        <form method="POST">
+
+            <div class="row">
+
+                <div class="col-md-4 mb-3">
+
+                    <label>Client</label>
+
+                    <select class="form-control" name="client_id" required>
+
+                        {% for client in clients %}
+                        <option value="{{ client.id }}"
+                            {% if complaint.client_id == client.id %}selected{% endif %}>
+                            {{ client.company_name }}
+                        </option>
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+                <div class="col-md-4 mb-3">
+
+                    <label>Project</label>
+
+                    <select class="form-control" name="project_id" required>
+
+                        {% for project in projects %}
+                        <option value="{{ project.id }}"
+                            {% if complaint.project_id == project.id %}selected{% endif %}>
+                            {{ project.project_name }}
+                        </option>
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+                <div class="col-md-4 mb-3">
+
+                    <label>Assigned Employee</label>
+
+                    <select class="form-control" name="employee_id" required>
+
+                        {% for employee in employees %}
+                        <option value="{{ employee.id }}"
+                            {% if complaint.employee_id == employee.id %}selected{% endif %}>
+                            {{ employee.employee_name }}
+                        </option>
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+                <div class="col-md-6 mb-3">
+
+                    <label>Complaint Title</label>
+
+                    <input
+                        type="text"
+                        class="form-control"
+                        name="title"
+                        value="{{ complaint.title }}"
+                        required>
+
+                </div>
+
+                <div class="col-md-6 mb-3">
+
+                    <label>Priority</label>
+
+                    <select class="form-control" name="priority">
+
+                        <option value="Low"
+                            {% if complaint.priority=="Low" %}selected{% endif %}>Low</option>
+
+                        <option value="Medium"
+                            {% if complaint.priority=="Medium" %}selected{% endif %}>Medium</option>
+
+                        <option value="High"
+                            {% if complaint.priority=="High" %}selected{% endif %}>High</option>
+
+                    </select>
+
+                </div>
+
+                <div class="col-md-12 mb-3">
+
+                    <label>Description</label>
+
+                    <textarea
+                        class="form-control"
+                        rows="4"
+                        name="description"
+                        required>{{ complaint.description }}</textarea>
+
+                </div>
+
+                <div class="col-md-6 mb-3">
+
+                    <label>Status</label>
+
+                    <select class="form-control" name="status">
+
+                        <option value="In Progress"
+                            {% if complaint.status=="In Progress" %}selected{% endif %}>In Progress</option>
+
+                        <option value="Resolved"
+                            {% if complaint.status=="Resolved" %}selected{% endif %}>Resolved</option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+            <button type="submit" class="btn btn-warning px-4 fw-semibold">
+                Update Complaint
+            </button>
+
+            <a href="/complaints" class="btn btn-secondary">
+                Cancel
+            </a>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}
