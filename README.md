@@ -1,6 +1,6 @@
-# Pratyush Advertising Management System (PAMS)
+# BizFlow – Business Management System
 
-A comprehensive web-based Business Management Portal developed during an Industrial Internship at **Pratyush Advertising**. The system digitizes and streamlines the company's daily operations by providing a centralized platform for managing clients, projects, employees, complaints, invoices, and business analytics.
+A comprehensive web-based Business Management Portal developed during an Industrial Internship at **Pratyush Advertising Pvt. Ltd**. The system digitizes and streamlines the company's daily operations by providing a centralized platform for managing clients, projects, employees, complaints, invoices, and business analytics.
 
 ---
 
